@@ -1,0 +1,7 @@
+[package]
+name = "cart_checkout_validation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+shopify-function = "0.5"

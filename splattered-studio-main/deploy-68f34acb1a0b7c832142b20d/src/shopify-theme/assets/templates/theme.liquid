@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="{{ shop.locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, user-scalable=0">
+  <meta name="theme-color" content="#FF6B35">
+
+  <title>
+    {{ page_title }}{% if current_tags %} - tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} - Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  <!-- Theme CSS -->
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {{ 'custom.css' | asset_url | stylesheet_tag }}
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="{{ 'manifest.json' | asset_url }}">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="{{ shop.name }}">
+  <link rel="apple-touch-icon" href="{{ 'apple-touch-icon.png' | asset_url }}">
+
+  <!-- SEO and Social Meta Tags -->
+  <meta name="description" content="Spladdered Haus™ - Original art, published books & custom clothing with autonomous business automation. Connect Shopify, Etsy, Amazon & 9+ platforms with one click!">
+  <meta name="keywords" content="spladdered haus, custom sneakers, digital art prints, 3D printing, autonomous business, multi-platform e-commerce, Shopify automation">
+  <meta name="author" content="Spladdered Haus™">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ shop.name }} - Revolutionary Multi-Platform E-commerce">
+  <meta property="og:description" content="Original art, published books & custom clothing with autonomous business automation.">
+  <meta property="og:url" content="{{ shop.url }}">
+  <meta property="og:site_name" content="{{ shop.name }}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ shop.name }} - Revolutionary Multi-Platform E-commerce">
+  <meta name="twitter:description" content="Original art, published books & custom clothing with autonomous business automation.">
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
+</head>
+<body class="template-{{ template | replace: '.', '-' | replace: '/', '-' }}{% if customer %} customer-logged-in{% endif %}">
+
+  <!-- Skip to content link -->
+  <a href="#main" class="skip-to-content-link">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  {% section 'header' %}
+
+  <main id="main" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  <!-- Theme JavaScript -->
+  {{ 'theme.js' | asset_url | script_tag }}
+  {{ 'custom.js' | asset_url | script_tag }}
+
+  <!-- Shopify Scripts -->
+  <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+</body>
+</html>

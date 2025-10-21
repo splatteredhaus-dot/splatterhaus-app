@@ -1,0 +1,205 @@
+<div class="product-page">
+  <div class="product-container">
+    <div class="product-image">
+      <img src="{{ product.featured_image.src | img_url: '600x600' }}" alt="{{ product.featured_image.alt | escape }}">
+    </div>
+
+    <div class="product-details">
+      <h1 class="product-title">{{ product.title }}</h1>
+
+      <div class="product-price">
+        {% if product.compare_at_price %}
+          <span class="compare-price">{{ product.compare_at_price | money }}</span>
+          <span class="current-price">{{ product.price | money }}</span>
+        {% else %}
+          <span class="current-price">{{ product.price | money }}</span>
+        {% endif %}
+      </div>
+
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
+        {% if product.variants.size > 1 %}
+          <div class="variant-options">
+            <label for="product-select">Options:</label>
+            <select id="product-select" name="id">
+              {% for variant in product.variants %}
+                <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %}>
+                  {{ variant.title }} - {{ variant.price | money }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        {% endif %}
+
+        <div class="quantity-selector">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ product.variants.first.inventory_quantity }}">
+        </div>
+
+        <button type="submit" class="btn btn--primary add-to-cart-btn">
+          Add to Cart - {{ product.price | money }}
+        </button>
+      </form>
+
+      {% if product.tags.size > 0 %}
+        <div class="product-tags">
+          <h3>Tags:</h3>
+          <ul>
+            {% for tag in product.tags %}
+              <li>{{ tag }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  {% assign related_products = collections.all.products | where: "type", product.type | limit: 4 %}
+  {% if related_products.size > 1 %}
+    <div class="related-products">
+      <h2>Related Products</h2>
+      <div class="product-grid">
+        {% for related_product in related_products %}
+          {% unless related_product.id == product.id %}
+            <div class="product-item">
+              <div class="product-image">
+                <a href="{{ related_product.url }}">
+                  <img src="{{ related_product.featured_image.src | img_url: '300x300' }}" alt="{{ related_product.featured_image.alt | escape }}">
+                </a>
+              </div>
+              <div class="product-info">
+                <h3 class="product-title">
+                  <a href="{{ related_product.url }}">{{ related_product.title }}</a>
+                </h3>
+                <p class="product-price">{{ related_product.price | money }}</p>
+              </div>
+            </div>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+.product-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.product-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.product-image img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.product-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.product-price {
+  margin-bottom: 30px;
+}
+
+.compare-price {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 15px;
+}
+
+.current-price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FF6B35;
+}
+
+.product-description {
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.product-form {
+  margin-bottom: 40px;
+}
+
+.variant-options, .quantity-selector {
+  margin-bottom: 20px;
+}
+
+.variant-options label, .quantity-selector label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.variant-options select, .quantity-selector input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.add-to-cart-btn {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1rem;
+}
+
+.product-tags {
+  margin-top: 40px;
+}
+
+.product-tags ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.product-tags li {
+  background: #f8f9fa;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.related-products {
+  margin-top: 60px;
+}
+
+.related-products h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  color: #2c3e50;
+}
+
+@media (max-width: 768px) {
+  .product-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .product-title {
+    font-size: 2rem;
+  }
+}
+</style>

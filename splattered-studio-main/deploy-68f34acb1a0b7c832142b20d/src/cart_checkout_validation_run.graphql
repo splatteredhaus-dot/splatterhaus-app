@@ -1,0 +1,23 @@
+query Input {
+  cart {
+    lines {
+      merchandise {
+        __typename
+        ... on ProductVariant {
+          product {
+            hasTags(tags: ["chocolate", "frozen", "refrigerated", "heat-sensitive"]) {
+              tag
+              hasTag
+            }
+          }
+        }
+      }
+    }
+    deliveryGroups {
+      deliveryAddress {
+        countryCode
+        provinceCode
+      }
+    }
+  }
+}

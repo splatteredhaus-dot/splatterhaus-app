@@ -1,0 +1,17 @@
+@echo off
+echo Deploying Splattered™ Personal Website...
+echo.
+echo Site is ready for deployment at:
+echo https://splattered-personal-site.netlify.app
+echo.
+echo To deploy manually:
+echo 1. Go to netlify.com
+echo 2. Drag and drop the personal-website folder
+echo 3. Or use: netlify deploy --prod --dir=. --site-name=splattered-personal-site
+echo.
+echo Configuration files updated:
+echo - .gitignore: Added security exclusions
+echo - netlify.toml: Updated for static HTML
+echo.
+echo Your site is ready!
+pause

@@ -1,0 +1,5 @@
+[[extensions]]
+type = "cart_checkout_validation"
+name = "Temperature Sensitive Shipping Restriction"
+handle = "temperature_sensitive_shipping_restriction"
+runtime = "rust"

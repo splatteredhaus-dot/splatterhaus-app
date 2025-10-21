@@ -1,0 +1,453 @@
+<div class="page-width">
+  <div class="grid">
+    <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+      <div class="section-header text-center">
+        <h1>{{ 'home_page.hero.title' | t }}</h1>
+        <p>{{ 'home_page.hero.subtitle' | t }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Welcome to {{ shop.name }}</h1>
+      <p class="hero-subtitle">Original paintings, published books, and custom clothing designed by independent artists. Supporting creators, one splattered masterpiece at a time.</p>
+      <div class="hero-buttons">
+        <a href="#autonomous" class="btn btn--primary">Get Autonomous Program</a>
+        <a href="{{ collections.all.url }}" class="btn btn--secondary">Shop All Products</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Autonomous Business Program Section -->
+  <section id="autonomous" class="autonomous-section">
+    <div class="section-header text-center">
+      <h2>{{ 'home_page.autonomous.title' | t }}</h2>
+    </div>
+    <div class="autonomous-container">
+      <div class="autonomous-content">
+        <h3>🤖 Complete Business Automation System</h3>
+        <p><strong>Simply link your platforms ONCE and watch everything sync automatically!</strong></p>
+        <div class="autonomous-features">
+          <div class="feature-highlight">
+            <h4>🎯 One-Click Integration</h4>
+            <p>Connect Shopify, Etsy, Amazon, eBay, Facebook, TikTok, Instagram, and more in minutes</p>
+          </div>
+          <div class="feature-highlight">
+            <h4>⚡ Real-Time Sync</h4>
+            <p>Add a product to Shopify = automatically appears on ALL connected platforms</p>
+          </div>
+          <div class="feature-highlight">
+            <h4>💰 Revenue Optimization</h4>
+            <p>AI-powered pricing and inventory management across all marketplaces</p>
+          </div>
+          <div class="feature-highlight">
+            <h4>📊 Live Analytics</h4>
+            <p>Track sales, inventory, and profits across all platforms in real-time</p>
+          </div>
+        </div>
+        <div class="autonomous-cta">
+          <a href="#train-dashboard" class="btn btn--primary">Launch Autonomous Program - $297</a>
+          <p class="cta-note">*Includes lifetime updates and premium support</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="featured-products">
+    <div class="section-header text-center">
+      <h2>{{ 'home_page.featured_products.title' | t }}</h2>
+    </div>
+    <div class="product-grid">
+      {% assign featured_products = collections.all.products | limit: 8 %}
+      {% for product in featured_products %}
+        <div class="product-item">
+          <div class="product-image">
+            <a href="{{ product.url }}">
+              <img src="{{ product.featured_image.src | img_url: '300x300' }}" alt="{{ product.featured_image.alt | escape }}">
+            </a>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+            <p class="product-price">{{ product.price | money }}</p>
+            <form action="/cart/add" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+              <button type="submit" class="btn btn--secondary">Add to Cart</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Train Dashboard Section -->
+  <section id="train-dashboard" class="train-dashboard-section">
+    <div class="section-header text-center">
+      <h2>🚂 {{ shop.name }} Train Dashboard</h2>
+      <p>Build your revenue train by connecting platforms. Watch your integrations run autonomously!</p>
+    </div>
+
+    <div class="train-track-builder">
+      <h3>🚂 Train Track Builder</h3>
+      <p>Drag platforms from below to build your revenue train:</p>
+      <div class="available-tools">
+        <div class="tool-item" draggable="true" data-tool="shopify">Shopify</div>
+        <div class="tool-item" draggable="true" data-tool="etsy">Etsy</div>
+        <div class="tool-item" draggable="true" data-tool="amazon">Amazon</div>
+        <div class="tool-item" draggable="true" data-tool="ebay">eBay</div>
+        <div class="tool-item" draggable="true" data-tool="facebook">Facebook</div>
+        <div class="tool-item" draggable="true" data-tool="instagram">Instagram</div>
+        <div class="tool-item" draggable="true" data-tool="tiktok">TikTok</div>
+        <div class="tool-item" draggable="true" data-tool="woocommerce">WooCommerce</div>
+      </div>
+    </div>
+
+    <div class="current-track">
+      <h3>🚂 Your Revenue Train</h3>
+      <div class="selected-tools" id="selectedTools">
+        <!-- Selected tools will appear here -->
+      </div>
+    </div>
+
+    <div class="control-panel">
+      <button id="startTrain" class="btn btn--primary">🚀 Start Revenue Train</button>
+      <button id="stopTrain" class="btn btn--secondary">🛑 Stop All Trains</button>
+      <span id="trainStatus">Status: ⏹️ Stopped</span>
+    </div>
+
+    <div class="monitoring-panel">
+      <h3>📊 Real-Time Revenue Monitoring</h3>
+      <div id="monitoringData">
+        <!-- Live monitoring data will appear here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 3D Printing Section -->
+  <section class="section-3d">
+    <div class="section-header text-center">
+      <h2>{{ 'home_page.3d_printing.title' | t }}</h2>
+    </div>
+    <div class="section-content">
+      <div class="section-text">
+        <h3>🎨 Bring Your Designs to Life</h3>
+        <p>Transform your digital art into physical objects with our professional 3D printing services.</p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <h4>🏗️ Custom Sculptures</h4>
+            <p>Turn your digital designs into stunning 3D printed art pieces</p>
+          </div>
+          <div class="feature-card">
+            <h4>📱 Personalized Accessories</h4>
+            <p>Custom phone cases, jewelry, and accessories made to order</p>
+          </div>
+          <div class="feature-card">
+            <h4>🔧 Design Prototypes</h4>
+            <p>Professional prototyping for designers and creators</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+// Train Dashboard JavaScript (simplified for Shopify)
+document.addEventListener('DOMContentLoaded', function() {
+  const availableTools = document.querySelectorAll('.tool-item');
+  const selectedTools = document.getElementById('selectedTools');
+  const startTrainBtn = document.getElementById('startTrain');
+  const stopTrainBtn = document.getElementById('stopTrain');
+  const trainStatus = document.getElementById('trainStatus');
+  const monitoringData = document.getElementById('monitoringData');
+
+  let isRunning = false;
+  let trainTools = [];
+
+  // Drag and drop functionality
+  availableTools.forEach(tool => {
+    tool.addEventListener('dragstart', function(e) {
+      e.dataTransfer.setData('tool', this.dataset.tool);
+    });
+  });
+
+  selectedTools.addEventListener('dragover', function(e) {
+    e.preventDefault();
+  });
+
+  selectedTools.addEventListener('drop', function(e) {
+    e.preventDefault();
+    const tool = e.dataTransfer.getData('tool');
+    if (tool && !trainTools.includes(tool)) {
+      addToolToTrain(tool);
+    }
+  });
+
+  function addToolToTrain(tool) {
+    trainTools.push(tool);
+    const toolElement = document.createElement('div');
+    toolElement.className = 'train-car';
+    toolElement.innerHTML = `
+      <span>🚂 ${tool}</span>
+      <button onclick="removeTool('${tool}')">❌</button>
+    `;
+    selectedTools.appendChild(toolElement);
+  }
+
+  window.removeTool = function(tool) {
+    trainTools = trainTools.filter(t => t !== tool);
+    const trainCars = selectedTools.querySelectorAll('.train-car');
+    trainCars.forEach(car => {
+      if (car.textContent.includes(tool)) {
+        car.remove();
+      }
+    });
+  };
+
+  startTrainBtn.addEventListener('click', function() {
+    if (trainTools.length === 0) {
+      alert('Please add tools to your train before starting!');
+      return;
+    }
+    isRunning = true;
+    trainStatus.textContent = 'Status: 🚂 Running';
+    startTrainBtn.disabled = true;
+    stopTrainBtn.disabled = false;
+    startMonitoring();
+  });
+
+  stopTrainBtn.addEventListener('click', function() {
+    isRunning = false;
+    trainStatus.textContent = 'Status: ⏹️ Stopped';
+    startTrainBtn.disabled = false;
+    stopTrainBtn.disabled = true;
+    monitoringData.innerHTML = '';
+  });
+
+  function startMonitoring() {
+    if (!isRunning) return;
+
+    const data = {};
+    trainTools.forEach(tool => {
+      data[tool] = {
+        status: Math.random() > 0.1 ? 'Running' : 'Error',
+        posts: Math.floor(Math.random() * 50),
+        sales: Math.floor(Math.random() * 20),
+        revenue: (Math.random() * 500).toFixed(2)
+      };
+    });
+
+    displayMonitoringData(data);
+  }
+
+  function displayMonitoringData(data) {
+    monitoringData.innerHTML = '';
+    Object.entries(data).forEach(([tool, info]) => {
+      const card = document.createElement('div');
+      card.className = 'monitoring-card';
+      card.innerHTML = `
+        <h4>${tool}</h4>
+        <p><strong>Status:</strong> <span class="${info.status === 'Running' ? 'success' : 'error'}">${info.status}</span></p>
+        <p><strong>Posts/Sales:</strong> ${info.posts}</p>
+        <p><strong>Revenue:</strong> $${info.revenue}</p>
+      `;
+      monitoringData.appendChild(card);
+    });
+
+    if (isRunning) {
+      setTimeout(() => startMonitoring(), 2000);
+    }
+  }
+});
+</script>
+
+<style>
+/* Shopify-compatible styles */
+.hero-section {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #FF6B35, #f093fb);
+  color: white;
+  margin-bottom: 40px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.autonomous-section {
+  padding: 60px 20px;
+  background-color: #f8f9fa;
+}
+
+.autonomous-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.feature-highlight {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.product-item {
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+}
+
+.product-image img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-title {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FF6B35;
+  margin-bottom: 15px;
+}
+
+.train-track-builder, .current-track, .control-panel, .monitoring-panel {
+  background: white;
+  padding: 30px;
+  margin: 20px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.available-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.tool-item {
+  padding: 15px;
+  background-color: #28a745;
+  color: white;
+  border-radius: 8px;
+  cursor: grab;
+  user-select: none;
+  text-align: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.selected-tools {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+
+.train-car {
+  padding: 15px;
+  background: #e9ecef;
+  border-radius: 8px;
+  border: 2px solid #007bff;
+  position: relative;
+  min-width: 120px;
+  text-align: center;
+}
+
+.monitoring-card {
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  margin-bottom: 15px;
+}
+
+.success { color: #28a745; }
+.error { color: #dc3545; }
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.btn--primary {
+  background-color: #FF6B35;
+  color: white;
+}
+
+.btn--primary:hover {
+  background-color: #e55a2b;
+}
+
+.btn--secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn--secondary:hover {
+  background-color: #5a6268;
+}
+
+.section-header {
+  margin-bottom: 40px;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+</style>

@@ -1,0 +1,24 @@
+{
+  "en": {
+    "home_page": {
+      "hero": {
+        "title": "Welcome to Spladdered Haus™",
+        "subtitle": "Original art, published books & custom clothing with autonomous business automation"
+      },
+      "autonomous": {
+        "title": "Autonomous Business Program"
+      },
+      "featured_products": {
+        "title": "Featured Products"
+      },
+      "3d_printing": {
+        "title": "3D Printing & Design"
+      }
+    },
+    "general": {
+      "accessibility": {
+        "skip_to_content": "Skip to content"
+      }
+    }
+  }
+}
